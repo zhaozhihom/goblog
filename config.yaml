@@ -1,0 +1,6 @@
+server:
+  port: 8080
+database:
+  url: root:qwer1234@tcp(127.0.0.1:3306)/blog
+  maxIdle: 5
+  maxOpen: 10
