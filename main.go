@@ -5,9 +5,10 @@ import (
 
 	"blog/config"
 	"blog/dao"
+	router "blog/routers"
+
 	"gopkg.in/yaml.v3"
 )
-
 
 func main() {
 
@@ -24,7 +25,10 @@ func main() {
 		log.Error("解析配置文件错误, ", err)
 	}
 	log.Debugf("读取到配置: %+v", conf)
-	
+
 	// 初始化数据库连接
 	dao.InitDB(&conf)
+
+	// 初始化路由
+	router.InitRouter(&conf)
 }
