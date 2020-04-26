@@ -6,8 +6,9 @@ import "time"
 type Posts struct {
 	ID         int64     `db:"id" form:"id" json:"id"`
 	Title      string    `db:"title" form:"title" json:"title"`
-	Content    string    `db:"content" form:"content" json:"content"`
+	Content    string    `db:"content" form:"content" json:"content,omitempty"`
 	ClickTimes int64     `db:"click_times" json:"clickTimes"`
+	Deleted    bool      `db:"deleted" json:"deleted"`
 	PostTime   time.Time `db:"post_time" json:"postTime"`
 }
 
@@ -28,7 +29,7 @@ func InsertPost(post *Posts) (int64, error) {
 // SelectPosts 查询所有内容
 func SelectPosts(start int, offset int) (*[]Posts, error) {
 	var posts = []Posts{}
-	err := db.Select(&posts, "select * from posts limit ?, ?", start, offset)
+	err := db.Select(&posts, "select * from posts where deleted = 0 order by post_time desc limit ?, ?", start, offset)
 	if err != nil {
 		logger.Errorf("查询文章错误:", err)
 		return &posts, err
@@ -82,4 +83,28 @@ func UpdateClickTime(post *Posts) error {
 	}
 	logger.Info("点击了文章,", post)
 	return nil
+}
+
+// SelectAllPosts 查询所有内容
+func SelectAllPosts() (*[]Posts, error) {
+	var posts = []Posts{}
+	err := db.Select(&posts, "select id, title, click_times, post_time from posts order by post_time desc")
+	if err != nil {
+		logger.Errorf("查询所有文章错误:", err)
+		return &posts, err
+	}
+	return &posts, nil
+}
+
+// MarkDletePost 标记删除文章
+func MarkDletePost(id int64) (int64, error) {
+	ret, err := db.Exec("update posts set deleted = !deleted where id = ?", id)
+	if err != nil {
+		logger.Error("标记删除文章错误:", err)
+		return 0, err
+	}
+	pid, _ := ret.LastInsertId()
+	pcount, _ := ret.RowsAffected()
+	logger.Infof("标记文章:id: %d 为删除", pid)
+	return pcount, nil
 }
