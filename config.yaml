@@ -2,6 +2,6 @@ server:
   port: 8080
   basePath: /api
 database:
-  url: root:qwer1234@tcp(127.0.0.1:3306)/blog?parseTime=true
+  url: root:qwer1234@tcp(127.0.0.1:3306)/blog?parseTime=true&charset=utf8mb4
   maxIdle: 5
   maxOpen: 10

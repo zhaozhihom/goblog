@@ -88,7 +88,7 @@ func UpdateClickTime(post *Posts) error {
 // SelectAllPosts 查询所有内容
 func SelectAllPosts() (*[]Posts, error) {
 	var posts = []Posts{}
-	err := db.Select(&posts, "select id, title, click_times, post_time from posts order by post_time desc")
+	err := db.Select(&posts, "select id, title, click_times, deleted, post_time from posts order by post_time desc")
 	if err != nil {
 		logger.Errorf("查询所有文章错误:", err)
 		return &posts, err
