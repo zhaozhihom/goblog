@@ -18,11 +18,13 @@ func main() {
 	f, err := os.Open("./config.yaml")
 	if err != nil {
 		log.Error("读取配置文件错误, ", err)
+		return
 	}
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(&conf)
 	if err != nil {
 		log.Error("解析配置文件错误, ", err)
+		return
 	}
 	log.Debugf("读取到配置: %+v", conf)
 

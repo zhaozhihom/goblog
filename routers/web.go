@@ -10,8 +10,13 @@ import (
 
 var logger = config.GetLogger()
 
+var users []config.User
+
 // InitRouter 初始化路由
 func InitRouter(conf *config.Config) {
+
+	users = conf.Users
+
 	r := gin.Default()
 	v1 := r.Group(conf.Server.BasePath)
 	store := cookie.NewStore([]byte("username"))
@@ -19,19 +24,22 @@ func InitRouter(conf *config.Config) {
 
 	public := v1.Group("/public")
 	{
+		public.POST("/login", login)
+		public.GET("/checkAccess", checkIsLogin)
+		public.POST("/logout", logout)
 		public.GET("/posts", getPosts)
+		public.GET("/allpost", getAllPosts)
+		public.PUT("/post/click", clickPost)
 	}
 
 	private := v1.Group("/private")
-	
+
 	private.Use(authRequired())
 	{
 		private.POST("/post", postPost)
 		private.GET("/post/:id", getPost)
 		private.PUT("/post", putPost)
 		private.DELETE("/post", deletePost)
-		private.PUT("/post/click", clickPost)
-		private.GET("/allpost", getAllPosts)
 		private.PUT("/post/markdeleted/:id", markDeletePost)
 	}
 
@@ -42,6 +50,8 @@ func authRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
 		username := session.Get("username")
+
+		logger.Info("authRequired username:", username)
 
 		if username == nil {
 			c.AbortWithStatusJSON(401, gin.H{

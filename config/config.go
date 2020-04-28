@@ -10,4 +10,10 @@ type Config struct {
 		MaxOpen int    `yaml:"maxOpen" envconfig:"DATABASE_MAXOPEN"`
 		MaxIdle int    `yaml:"maxIdle" envconfig:"DATABASE_MAXIDLE"`
 	} `yaml:"database"`
+	Users []User `yaml:"users"`
+}
+
+type User struct {
+	Username string `yaml:"username" json:"username"`
+	Password string `yaml:"password" json:"password"`
 }
