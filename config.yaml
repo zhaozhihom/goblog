@@ -7,6 +7,6 @@ database:
   maxOpen: 10
 users:
   - username: admin
-    password: '!1@2#3$4'
+    password: '123456'
   - username: visitor
     password: '123456'
