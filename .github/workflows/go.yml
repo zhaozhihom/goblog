@@ -35,3 +35,6 @@ jobs:
 
     - name: Test
       run: go test -v .
+
+    - name: Start
+      run: mv blog ~/website/blog && pkill -9 blog && cd ~/website/ && ./blog
