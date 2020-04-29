@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,6 +19,12 @@ func InitRouter(conf *config.Config) {
 	users = conf.Users
 
 	r := gin.Default()
+
+	// r.StaticFS("/static", http.Dir("./build/static"))
+	// r.StaticFS("/image", http.Dir("./build/image"))
+	// r.StaticFile("/favicon.ico", "./build/favicon.ico")
+	r.Use(static.Serve("/", static.LocalFile("./build", true)))
+
 	v1 := r.Group(conf.Server.BasePath)
 	store := cookie.NewStore([]byte("username"))
 	v1.Use(sessions.Sessions("mysession", store))
