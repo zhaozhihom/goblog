@@ -38,5 +38,4 @@ jobs:
 
     - name: Start
       run: |
-        mv blog ~/website/blog && pkill -9 blog && cd ~/website/
-        sudo ./blog 2>&1 &
+        mv blog ~/website/blog && sudo pkill -9 blog && cd ~/website/ && sudo nohup ./blog 2>&1 &
