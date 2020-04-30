@@ -41,4 +41,4 @@ jobs:
         mv blog ~/website/blog
         sudo pkill -9 blog
         cd ~/website/
-        sudo ./startup.sh > /dev/null &
+        sudo ./startup.sh
