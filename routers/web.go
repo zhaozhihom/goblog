@@ -1,6 +1,7 @@
 package router
 
 import (
+	//"net/http"
 	"blog/config"
 
 	"github.com/gin-contrib/sessions"
@@ -20,10 +21,14 @@ func InitRouter(conf *config.Config) {
 
 	r := gin.Default()
 
-	// r.StaticFS("/static", http.Dir("./build/static"))
+	//r.StaticFS("/blog", http.Dir("./build"))
 	// r.StaticFS("/image", http.Dir("./build/image"))
 	// r.StaticFile("/favicon.ico", "./build/favicon.ico")
 	r.Use(static.Serve("/", static.LocalFile("./build", true)))
+
+	r.NoRoute(func(c *gin.Context) {
+		c.File("./build/index.html")
+	})
 
 	v1 := r.Group(conf.Server.BasePath)
 	store := cookie.NewStore([]byte("username"))
@@ -50,7 +55,8 @@ func InitRouter(conf *config.Config) {
 		private.PUT("/post/markdeleted/:id", markDeletePost)
 	}
 
-	r.RunTLS(":443", "./tls.crt", "./tls.key")
+	//r.RunTLS(":443", "./tls.crt", "./tls.key")
+	r.Run(":" + conf.Server.Port)
 }
 
 func authRequired() gin.HandlerFunc {
