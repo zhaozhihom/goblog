@@ -55,8 +55,8 @@ func InitRouter(conf *config.Config) {
 		private.PUT("/post/markdeleted/:id", markDeletePost)
 	}
 
-	//r.RunTLS(":443", "./tls.crt", "./tls.key")
-	r.Run(":" + conf.Server.Port)
+	r.RunTLS(":443", "./tls.crt", "./tls.key")
+	// r.Run(":" + conf.Server.Port)
 }
 
 func authRequired() gin.HandlerFunc {
