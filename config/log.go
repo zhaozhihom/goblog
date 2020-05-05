@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/op/go-logging"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var log = logging.MustGetLogger("blog")
@@ -17,7 +18,13 @@ var format = logging.MustStringFormatter(
 
 func init() {
 	// For demo purposes, create two backend for os.Stderr.
-	backend1 := logging.NewLogBackend(os.Stderr, "", 0)
+	backend1 := logging.NewLogBackend(&lumberjack.Logger{
+			Filename:   "./logs/blog.log",
+			MaxSize:    50, // megabytes
+			MaxBackups: 3,
+			MaxAge:     28, //days
+			Compress:   false, // disabled by default
+		}, "", 0)
 	backend2 := logging.NewLogBackend(os.Stderr, "", 0)
 
 	// For messages written to backend2 we want to add some additional
