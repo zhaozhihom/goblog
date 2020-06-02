@@ -1,6 +1,7 @@
 package util
 
 import (
+	"blog/config"
 	"log"
 	"strconv"
 	"strings"
@@ -8,6 +9,8 @@ import (
 
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 )
+
+var logger = config.GetLogger()
 
 // CovertPageToOffset 把页码和页数转换为开始和偏移量
 // 2, 5 => 5, 5
@@ -23,7 +26,7 @@ func CovertHTMLToPdf(html *string) (string, error) {
 	// Create new PDF generator
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
 	}
 
 	// Set global options
@@ -48,7 +51,7 @@ func CovertHTMLToPdf(html *string) (string, error) {
 	// Create PDF document in internal buffer
 	err = pdfg.Create()
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
 	}
 
 	now := time.Now()
@@ -57,7 +60,7 @@ func CovertHTMLToPdf(html *string) (string, error) {
 	// Write buffer contents to file on disk
 	err = pdfg.WriteFile(filePath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
 	}
 
 	log.Println("Done")
