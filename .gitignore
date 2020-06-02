@@ -4,5 +4,6 @@ blog
 .vscode
 
 *.log
+*.pdf
 
 build

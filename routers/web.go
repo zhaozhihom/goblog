@@ -42,6 +42,7 @@ func InitRouter(conf *config.Config) {
 		public.GET("/posts", getPosts)
 		public.GET("/allpost", getAllPosts)
 		public.PUT("/post/click", clickPost)
+		public.POST("/resume", postHTML)
 	}
 
 	private := v1.Group("/private")
@@ -56,7 +57,7 @@ func InitRouter(conf *config.Config) {
 	}
 
 	r.RunTLS(":443", "./tls.crt", "./tls.key")
-	// r.Run(":" + conf.Server.Port)
+	//r.Run(":" + conf.Server.Port)
 }
 
 func authRequired() gin.HandlerFunc {

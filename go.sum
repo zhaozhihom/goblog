@@ -1,3 +1,5 @@
+github.com/SebastiaanKlippert/go-wkhtmltopdf v1.5.0 h1:KNMkSqhko6c7eVncl/laVCS95jRryULVhVwwL0VynnU=
+github.com/SebastiaanKlippert/go-wkhtmltopdf v1.5.0/go.mod h1:zRBvVJtIfhaWvQ9lPIkXrtona4qqSmjZ1HfKvq4dQzI=
 github.com/boj/redistore v0.0.0-20180917114910-cd5dcc76aeff/go.mod h1:+RTT1BOk5P97fT2CiHkbFQwkK3mjsFAP6zCYV2aXtjw=
 github.com/bradfitz/gomemcache v0.0.0-20190329173943-551aad21a668/go.mod h1:H0wQNHz2YrLsuXOZozoeDmnHXkNCRmMW0gwFWDfEZDA=
 github.com/bradleypeabody/gorilla-sessions-memcache v0.0.0-20181103040241-659414f458e1/go.mod h1:dkChI7Tbtx7H1Tj7TqGSZMOeGpMP5gLHtjroHd4agiI=
